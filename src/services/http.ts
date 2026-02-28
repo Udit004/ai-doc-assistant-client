@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const rawBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+const rawBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const apiBaseUrl = rawBaseUrl.replace(/\/+$/, "");
 
 export function buildApiUrl(path: string): string {
