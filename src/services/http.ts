@@ -1,10 +1,11 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
 export function buildApiUrl(path: string): string {
   const cleanPath = path.replace(/^\/+/, "");
-  return `${apiBaseUrl}/${cleanPath}`;
+  const base = apiBaseUrl.replace(/\/+$/, "");
+  return `${base}/${cleanPath}`;
 }
 
 type RequestOptions = {
