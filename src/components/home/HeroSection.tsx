@@ -1,6 +1,13 @@
 "use client";
 
+import { useAuthModal } from "@/context/AuthModalContext";
+import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
+
 export default function HeroSection() {
+  const { open: openAuth } = useAuthModal();
+  const { user } = useAuth();
+
   return (
     <section
       className="relative min-h-screen flex flex-col items-center justify-center px-5 pt-24 pb-16 overflow-hidden"
@@ -49,13 +56,23 @@ export default function HeroSection() {
 
       {/* CTA Buttons */}
       <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-        <a
-          href="#get-started"
-          className="px-7 py-3.5 rounded-xl font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl text-base"
-          style={{ background: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)" }}
-        >
-          Get Started — It&apos;s Free
-        </a>
+        {user ? (
+          <Link
+            href="/chat"
+            className="px-7 py-3.5 rounded-xl font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl text-base"
+            style={{ background: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)" }}
+          >
+            Open Chat →
+          </Link>
+        ) : (
+          <button
+            onClick={openAuth}
+            className="px-7 py-3.5 rounded-xl font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl text-base border-0"
+            style={{ background: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)" }}
+          >
+            Get Started — It&apos;s Free
+          </button>
+        )}
         <a
           href="#how-it-works"
           className="px-7 py-3.5 rounded-xl font-semibold border border-line bg-white text-foreground shadow-sm transition-all hover:border-teal-400 hover:shadow-md text-base"

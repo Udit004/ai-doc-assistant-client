@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { open: openAuth } = useAuthModal();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -68,19 +70,20 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <a
-                href="#get-started"
-                className="px-4 py-2 rounded-lg text-sm font-semibold text-muted hover:text-foreground transition-colors"
+              <button
+                onClick={openAuth}
+                className="px-4 py-2 rounded-lg text-sm font-semibold text-muted bg-transparent border-0 hover:text-foreground transition-colors"
+                style={{ background: "transparent" }}
               >
                 Sign In
-              </a>
-              <a
-                href="#get-started"
-                className="px-4 py-2 rounded-lg text-sm font-semibold text-white shadow-sm transition-all hover:opacity-90"
+              </button>
+              <button
+                onClick={openAuth}
+                className="px-4 py-2 rounded-lg text-sm font-semibold text-white shadow-sm transition-all hover:opacity-90 border-0"
                 style={{ background: "linear-gradient(135deg, #0f766e, #0d9488)" }}
               >
                 Get Started →
-              </a>
+              </button>
             </>
           )}
         </div>
@@ -113,7 +116,11 @@ export default function Navbar() {
               <button onClick={logout} className="text-left text-danger bg-transparent" style={{ background: "transparent" }}>Logout</button>
             </>
           ) : (
-            <a href="#get-started" className="text-primary font-semibold" onClick={() => setMobileOpen(false)}>Get Started →</a>
+            <button
+              className="text-left text-primary font-semibold bg-transparent border-0 p-0"
+              style={{ background: "transparent" }}
+              onClick={() => { setMobileOpen(false); openAuth(); }}
+            >Get Started →</button>
           )}
         </div>
       )}

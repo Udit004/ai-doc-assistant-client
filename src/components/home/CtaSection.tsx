@@ -1,11 +1,12 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import AuthPanel from "@/feature/auth/components/AuthPanel";
+import { useAuthModal } from "@/context/AuthModalContext";
 import UploadPanel from "@/feature/upload/components/UploadPanel";
 
 export default function CtaSection() {
   const { user } = useAuth();
+  const { open: openAuth } = useAuthModal();
 
   return (
     <section
@@ -59,12 +60,34 @@ export default function CtaSection() {
           </div>
         )}
 
-        {/* Auth Panel or Upload Panel */}
-        <div className="rounded-2xl border border-line shadow-2xl overflow-hidden bg-white">
-          {user ? <UploadPanel /> : <AuthPanel />}
-        </div>
+        {/* Upload panel for authenticated users, CTA button for guests */}
+        {user ? (
+          <div className="rounded-2xl border border-line shadow-2xl overflow-hidden bg-white">
+            <UploadPanel />
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-4">
+            <button
+              onClick={openAuth}
+              className="w-full max-w-xs px-8 py-4 rounded-xl font-bold text-white shadow-xl transition-all hover:scale-105 hover:shadow-2xl text-base border-0"
+              style={{ background: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)" }}
+            >
+              Create Free Account →
+            </button>
+            <p className="text-sm text-muted">
+              Already have an account?{" "}
+              <button
+                onClick={openAuth}
+                className="font-semibold text-primary underline bg-transparent border-0 p-0 cursor-pointer hover:text-primary-hover"
+                style={{ background: "transparent" }}
+              >
+                Sign in
+              </button>
+            </p>
+          </div>
+        )}
 
-        {/* Trust signals */}
+        {/* Trust signals — only for guests */}
         {!user && (
           <div className="mt-6 flex flex-wrap items-center justify-center gap-5 text-xs text-muted/70">
             <span className="flex items-center gap-1.5">

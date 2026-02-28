@@ -1,3 +1,9 @@
+"use client";
+
+import { useAuth } from "@/context/AuthContext";
+import { useAuthModal } from "@/context/AuthModalContext";
+import Link from "next/link";
+
 type Step = {
   number: string;
   title: string;
@@ -75,6 +81,9 @@ const steps: Step[] = [
 ];
 
 export default function HowItWorksSection() {
+  const { user } = useAuth();
+  const { open: openAuth } = useAuthModal();
+
   return (
     <section
       id="how-it-works"
@@ -124,15 +133,25 @@ export default function HowItWorksSection() {
           ))}
         </div>
 
-        {/* Bottom connecting arrow hint */}
+        {/* Bottom CTA */}
         <div className="mt-16 flex justify-center">
-          <a
-            href="#get-started"
-            className="px-8 py-4 rounded-xl font-bold text-white shadow-xl transition-all hover:scale-105 hover:shadow-2xl text-base"
-            style={{ background: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)" }}
-          >
-            Start Now — It&apos;s Free →
-          </a>
+          {user ? (
+            <Link
+              href="/chat"
+              className="px-8 py-4 rounded-xl font-bold text-white shadow-xl transition-all hover:scale-105 hover:shadow-2xl text-base"
+              style={{ background: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)" }}
+            >
+              Open Chat →
+            </Link>
+          ) : (
+            <button
+              onClick={openAuth}
+              className="px-8 py-4 rounded-xl font-bold text-white shadow-xl transition-all hover:scale-105 hover:shadow-2xl text-base border-0"
+              style={{ background: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)" }}
+            >
+              Start Now — It&apos;s Free →
+            </button>
+          )}
         </div>
       </div>
     </section>
