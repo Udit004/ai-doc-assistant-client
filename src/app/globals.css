@@ -14,8 +14,14 @@
 
 /* ─── Global base ─────────────────────────────────────────────────────── */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  * {
+    box-sizing: border-box;
   }
 }
 

@@ -1,31 +1,45 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import AuthPanel from "@/feature/auth/components/AuthPanel";
-import UploadPanel from "@/feature/upload/components/UploadPanel";
 import { useAuth } from "@/context/AuthContext";
+import {
+  Navbar,
+  HeroSection,
+  FeaturesSection,
+  HowItWorksSection,
+  StatsSection,
+  CtaSection,
+  Footer,
+} from "@/components/home";
 
 export default function Home() {
-  const router = useRouter();
-  const { user, isLoading } = useAuth();
-
-  // Optionally redirect to /chat after a successful upload — handled by UploadPanel's Link
-  // No auto-redirect here so the user can upload documents on the home page
+  const { isLoading } = useAuth();
 
   if (isLoading) {
     return (
-      <main className="page">
-        <section className="card">
-          <p className="hint">Loading session…</p>
-        </section>
-      </main>
+      <div className="min-h-screen flex items-center justify-center"
+        style={{ background: "#fff8ec" }}>
+        <div className="flex flex-col items-center gap-4">
+          <div
+            className="w-12 h-12 rounded-2xl animate-pulse"
+            style={{ background: "linear-gradient(135deg, #0f766e, #14b8a6)" }}
+          />
+          <p className="text-muted text-sm font-medium animate-pulse">Loading…</p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <main className="page">
-      {user ? <UploadPanel /> : <AuthPanel />}
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <HeroSection />
+        <FeaturesSection />
+        <HowItWorksSection />
+        <StatsSection />
+        <CtaSection />
+      </main>
+      <Footer />
+    </>
   );
 }
