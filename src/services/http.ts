@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const rawBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-const apiBaseUrl = rawBaseUrl.replace(/\/+$/, "");
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export function buildApiUrl(path: string): string {
   const cleanPath = path.replace(/^\/+/, "");
