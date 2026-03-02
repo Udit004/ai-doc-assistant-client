@@ -22,6 +22,10 @@ function formatPipeline(pipeline: string): string {
     rag: "RAG",
     agent: "Agent",
     agent_fallback: "RAG → Agent fallback",
+    // New route names from the streaming pipeline
+    conversational: "Conversational",
+    rag_simple: "Simple RAG",
+    rag_complex: "Complex RAG",
   };
   return map[pipeline] ?? pipeline;
 }
@@ -138,6 +142,12 @@ export default function ChatMain({
                 <div className="w-full max-w-3xl">
                   <p className="text-sm whitespace-pre-wrap leading-relaxed text-foreground">
                     {item.content}
+                    {item.isStreaming && (
+                      <span
+                        className="inline-block w-0.5 h-4 ml-0.5 bg-current align-middle animate-pulse"
+                        aria-hidden="true"
+                      />
+                    )}
                   </p>
 
                   {item.pipeline && (
